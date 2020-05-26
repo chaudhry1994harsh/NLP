@@ -53,13 +53,13 @@ print(g1g.most_common(3))
 
 #2gram
 raven_2g = [];
-for x in range(0,len(tok_raven)):
+for x in range(0,len(tok_raven)-1):
     raven_2g.append(tok_raven[x]+" "+tok_raven[x+1])
 r2g = Counter(raven_2g)
 print (r2g.most_common(3))
 
 gulliversT_2g = [];
-for x in range(0,len(tok_gulliversT)):
+for x in range(0,len(tok_gulliversT)-1):
     gulliversT_2g.append(tok_gulliversT[x]+" "+tok_gulliversT[x+1])
 g2g = Counter(gulliversT_2g)
 print (g2g.most_common(3))
@@ -67,13 +67,13 @@ print (g2g.most_common(3))
 
 #3gram
 raven_3g = []
-for x in range(0,len(tok_raven)):
+for x in range(0,len(tok_raven)-2):
     raven_3g.append(tok_raven[x]+" "+tok_raven[x+1]+" "+tok_raven[x+2])
 r3g = Counter(raven_3g)
 print(r3g.most_common(3))
 
 gulliversT_3g = []
-for x in range(0,len(tok_gulliversT)):
+for x in range(0,len(tok_gulliversT)-2):
     gulliversT_3g.append(tok_gulliversT[x]+" "+tok_gulliversT[x+1]+" "+tok_gulliversT[x+2])
 g3g = Counter(gulliversT_3g)
 print(g3g.most_common(3))
@@ -113,3 +113,25 @@ for x in tok_gulliversT:
 print(mlen_gullivers)
 mlen_gullivers = mlen_gullivers/len_gulliversT
 print(mlen_gullivers)
+
+
+#https://www.w3schools.com/python/python_howto_remove_duplicates.asp
+#https://www.geeksforgeeks.org/python-sort-list-elements-by-frequency/
+#find average c in zipf
+z=0
+rank_raven = [item for items, c in Counter(tok_raven).most_common() for item in [items] * c] 
+rank_raven = list(dict.fromkeys(rank_raven))
+for x in vtok_raven:
+    z = z + (((tok_raven.count(x))/(len(tok_raven)))*((rank_raven.index(x))+1))
+c_raven = z/vocab_raven
+print(c_raven)
+
+z = 0
+rank_gulliversT = [item for items, c in Counter(tok_gulliversT).most_common() for item in [items] * c] 
+rank_gulliversT = list(dict.fromkeys(rank_gulliversT))
+for x in vtok_gulliversT:
+    z = z + (((tok_gulliversT.count(x))/(len(tok_gulliversT)))*((rank_gulliversT.index(x))+1))
+c_gulliversT = z/vocab_gulliversT
+print(c_gulliversT)
+
+

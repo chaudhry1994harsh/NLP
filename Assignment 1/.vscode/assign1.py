@@ -47,6 +47,17 @@ class tokenizor():
             mlen_raven = mlen_raven + len(x)
         return mlen_raven/len(self.token)
 
+    def zipfEstimateC(self):
+        z=0 
+        print(len(self.token))
+        r = [item for items, c in Counter(self.token).most_common() for item in [items] * c] 
+        r= list(dict.fromkeys(r))
+        rt = sorted(set(self.token))
+        for x in rt:
+            z = z + ( ( (self.token.count(x)) / (len(self.token)) ) * ( (r.index(x)) +1) )
+        c = z/len(sorted(set(self.token)))
+        return c 
+
 
 raven = tokenizor("raven.txt");
 raven.ONEgram()
@@ -56,6 +67,15 @@ print(raven.tLength())
 print(raven.vocab())
 print(raven.TTR())
 print(raven.meanLen())
+#not working in this file, refer to fuck.py
+raven.zipfEstimateC()
 
 
 gulliversT = tokenizor("gullivers-travels.txt");
+gulliversT.ONEgram()
+gulliversT.TWOgram()
+gulliversT.THREEgram()
+print(gulliversT.tLength())
+print(gulliversT.vocab())
+print(gulliversT.TTR())
+print(gulliversT.meanLen())
