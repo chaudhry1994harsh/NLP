@@ -135,3 +135,11 @@ c_gulliversT = z/vocab_gulliversT
 print(c_gulliversT)
 
 
+#https://stackoverflow.com/questions/9233027/unicodedecodeerror-charmap-codec-cant-decode-byte-x-in-position-y-character
+data_austen = open("austen.txt",encoding="utf8").read()
+tok_austen = re.split(r'\s+' , data_austen)
+tok_austen = [w.lower() for w in tok_austen]
+tok_austen = [re.sub(r'\W+', r'',w) for w in tok_austen]
+while '' in tok_austen:
+    tok_austen.pop(tok_austen.index(''))
+print(tok_austen)
