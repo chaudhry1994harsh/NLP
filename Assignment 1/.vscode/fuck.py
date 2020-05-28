@@ -142,4 +142,4 @@ tok_austen = [w.lower() for w in tok_austen]
 tok_austen = [re.sub(r'\W+', r'',w) for w in tok_austen]
 while '' in tok_austen:
     tok_austen.pop(tok_austen.index(''))
-print(tok_austen)
+#print(tok_austen)
