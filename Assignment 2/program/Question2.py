@@ -8,6 +8,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from collections import defaultdict 
 
+print("\n")
+print("Exercise 2:")
 
 # The setup for Question 2 i.e., part(a) starts here 
 # the files are opened and concatenated into one string
@@ -52,7 +54,9 @@ threeGram = []
 for x in range(0,len(token)-2):
     threeGram.append(token[x]+" "+token[x+1]+" "+token[x+2])
 
-print("\n")
+print()
+print("Part (a): ")
+
 
 
 # part(a) trigram language model is as follows 
@@ -69,6 +73,7 @@ def partA(two,third):
 print("P(from | he is): ",partA("he is","from"))
 #the above is just an example and is run in a better way in the part below
 print("\n")
+print("Part(b):")
 
 
 
@@ -103,6 +108,7 @@ partB("she is from the east .")
 partB("he is from the west .")
 partB("she is from the west .")
 print("\n")
+print("Part (c): ")
 
 
 
@@ -153,3 +159,4 @@ def partC(name):
 #testcases for part(c) are given to the function here
 partC("a student is")
 partC("the adventure of")
+print("\n")
