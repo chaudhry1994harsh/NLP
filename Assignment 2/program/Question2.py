@@ -8,6 +8,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from collections import defaultdict 
 
+
 # The setup for Question 2 i.e., part(a) starts here 
 # the files are opened and concatenated into one string
     #https://stackoverflow.com/questions/12703842/how-to-tokenize-natural-english-text-in-an-input-file-in-python
@@ -41,7 +42,6 @@ token = [w.lower() for w in token]
 while '' in token:
     token.pop(token.index(''))
 
-
 #two gram tokens are created here
 twoGram = []
 for x in range(0,len(token)-1):
@@ -52,51 +52,57 @@ threeGram = []
 for x in range(0,len(token)-2):
     threeGram.append(token[x]+" "+token[x+1]+" "+token[x+2])
 
+print("\n")
+
+
+# part(a) trigram language model is as follows 
+    #it takes 2 string inputs 'two' and 'third'
+    #'two' refers to the first 2 words of the trigram and 'third' refers to the last one word of the trigram 
+    #'two' is searched and counted in bigrams, 'two+third' is searched and counted in trigrams
+    #then the probability is calculated
+def partA(two,third):
+    p = ( (threeGram.count(two+" "+third)) / (twoGram.count(two)) )
+    return p
+
+# section of a query from part(b) will be run as follows from part(a)'s model
+#this is looped over for target string to get answer for the complete target string, as shown in the partB() function 
+print("P(from | he is): ",partA("he is","from"))
+#the above is just an example and is run in a better way in the part below
+print("\n")
+
 
 
 # part(b) starts here 
-#the function below handles everything for part(b)
+#the function below handles everything for part(b) using the trigram language model in part(a)
 def partB(name):
-    #input string is split into parts i.e., it is tokenised based whitespaces 
-    test1 = re.split(r'\s+' , name)
+    #input string is split into parts i.e., it is tokenised based whitespaces as oneGram
+    oneTest = re.split(r'\s+' , name)
 
     # 2 gram is created from the input string, last 2gram is removed as it does not have value, as nothing comes after the last 2 tokens
     twoTest=[]
-    for x in range(0,len(test1)-1):
-        twoTest.append(test1[x]+" "+test1[x+1])
+    for x in range(0,len(oneTest)-1):
+        twoTest.append(oneTest[x]+" "+oneTest[x+1])
     twoTest.pop(len(twoTest)-1)
 
-    # 3 gram is created from the input string
-    threeTest = []
-    for x in range(0,len(test1)-2):
-        threeTest.append(test1[x]+" "+test1[x+1]+" "+test1[x+2])
-
     #loop is run and inside the loop for each iteration 
-    #instances of 3gram from input string is counted in 3gram of the data, this is then divided by instances of 2gram from input string is counted in 2gram of the data
-    #the above gives the value of p when p1*p2*p3*p4
-    p=1
-    w = 0
-    q = 0
-    r = 0
+    #instances of 1gram and 2gram are selected from the input string and sent to partA function to get it's P(one|two)
+    #the above gives the value of P(for input string) when p1*p2*p3*p4(not printed) or based on e-base log-space(printed)
+    p = 1
+    lg = 0
     for x in range(len(twoTest)):
-        p = p * ( (threeGram.count(threeTest[x])) / (twoGram.count(twoTest[x])) )
-        w = w + math.log10( (threeGram.count(threeTest[x])) / (twoGram.count(twoTest[x])) )
-        q = q + math.log1p( (threeGram.count(threeTest[x])) / (twoGram.count(twoTest[x])) )
-        r = r + math.log2( (threeGram.count(threeTest[x])) / (twoGram.count(twoTest[x])) )
-    w = math.exp(w)
-    q = math.exp(q)
-    r = math.exp(r)
-    print("normal: P("+name+"): ",p)
-    print("exp log10: P("+name+"): ",w)
-    print("exp log1p: P("+name+"): ",q)
-    print("exp log2: P("+name+"): ",r)
-    print("\n")
+        p = p * partA(twoTest[x],oneTest[x+2])
+        lg = lg + math.log(partA(twoTest[x],oneTest[x+2]))
+    lg = math.exp(lg)
+    print("P("+name+"): ", lg)
+    #print("P("+name+"): ", p)
+
 
 #testcases for part(b) are given to the function here
 partB("he is from the east .")
 partB("she is from the east .")
 partB("he is from the west .")
 partB("she is from the west .")
+print("\n")
 
 
 
