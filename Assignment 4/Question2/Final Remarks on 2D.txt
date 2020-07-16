@@ -1,0 +1,7 @@
+4D
+
+Increasing the number of reviews improved the all-round predictions of similar words, outliers, and analogies.
+
+Decreasing and improving the size of the window both, resulted in the worsening of predictions. So we should check the window size accordingly and, it should not be too large or too small but should be on a sweet spot.
+
+Increasing the PCA vectors did result in a little bit improvement of predictions but increasing the number of vectors leads to increasing running times.
